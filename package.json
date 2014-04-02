@@ -1,0 +1,28 @@
+{
+  "name": "win-save",
+  "description": "Save/Load of schema on server side of winjs",
+  "version": "0.0.1",
+  "keywords": ["Neural Network", "NN", "Artificial Neural Networks", "WIN", "ANN", "CPPN", "NEAT", "HyperNEAT"],
+  "author" : { "name": "Paul Szerlip",
+      "email": "Paul.Szerlip@cs.ucf.edu",
+      "url": "http://designforcode.com/" },
+  "main":"win.js",
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/OptimusLime/winjs.git"
+  },
+  "bugs" : "https://github.com/OptimusLime/winjs/issues",
+  "license":"MIT",
+  "dependencies": {
+      "win-base" : "0.x.x",
+      "traverse" : "0.x.x",
+      "express": "3.x",
+      "mongoose": "3.6.x"
+  },
+  "devDependencies": {
+      "express": "3.x",
+      "mongoose": "3.6.x",
+      "mocha": "1.1.x",
+      "should": "1.1.x"
+  }
+}

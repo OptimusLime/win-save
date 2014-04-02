@@ -1,0 +1,5 @@
+{
+    "pictureGenotype": {"type": "String", "ref" : "NEATGenotype"},
+    "arrayGenotype": [{"example": "Number", "genotype": [{"example2": "Number", "genotype2": {"type": "String", "ref" : "NEATGenotype"}}]}],
+    "secondTest": {"second" : "String", "genoSecond" : {"type": "String", "ref" : "NEATGenotype"}}
+}

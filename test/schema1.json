@@ -1,0 +1,4 @@
+{
+    "pictureGenotype": {"type": "String", "ref" : "NEATGenotype"},
+    "secondTest": {"second" : "String", "genoSecond" : {"type": "String", "ref" : "NEATGenotype"}}
+}
