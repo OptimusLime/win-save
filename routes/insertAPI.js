@@ -734,23 +734,11 @@ module.exports = function(appRoutes)
 //            return;
 //        }
 
-        //we have made it past validation, let's create our objects, and then shazam, save them
-
-        var invalidObjects = insertAPI.validateObjects(artifacts, type);
-
-
-
-        if(invalidObjects){
-            callback('Error validating objects', invalidObjects);
-            return;
-        }
-
         var artifactIDMapping = {};
         var inverseIDMapping = {};
         var modelMapList = {};
         var justArtifactModels = {};
         var fullRefs = winroutes.schemaLoader.getFullSchemaReferences();
-
 
 
         //TODO: standardize the creation event logic, does it always happen? When does it not happen?
@@ -778,6 +766,19 @@ module.exports = function(appRoutes)
                 }
             });
         }
+
+        var invalidObjects = insertAPI.validateObjects(artifacts, type);
+
+        //we have made it past validation, let's create our objects, and then shazam, save them
+        if(invalidObjects){
+            callback('Error validating objects', invalidObjects);
+            return;
+        }
+
+    
+
+
+
 //        console.log(util.inspect(artifacts, 4));
 
         //Make sure creation is done BEFORE this step -- doh!
