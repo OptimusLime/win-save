@@ -1,11 +1,10 @@
 {
-    "absoluteFitness": {"type": "Number", "default": "zero"},
-    "behavior": [{"type": "Number"}],
     "age" : {"type": "Date", "default": "now"},
     "step" : {"type": "Number", "default": "zero"},
     "nodes": [{
         "gid": "String",
         "step": {"type": "Number", "default": "zero"},
+        "bias": {"type": "Number", "default": "zero"},
         "activationFunction": "String",
         "age": {"type": "Date", "default": "now"},
         "nodeType": "String",

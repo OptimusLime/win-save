@@ -201,7 +201,11 @@ module.exports = function(appRoutes)
         {
             //load our seed object
             //batch load
-            var syncRead = fs.readFileSync(path.resolve(directory, f));
+            //don't investigate anything that is not a json object
+	    //why would it be otherwise???
+	     if(f.indexOf(".json") == -1)
+                return;
+	    var syncRead = fs.readFileSync(path.resolve(directory, f));
             var gObject = JSON.parse(syncRead);
 
             var constructedSeed = {seedID: gObject.seedID, artifactID: gObject};
