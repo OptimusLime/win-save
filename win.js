@@ -107,6 +107,12 @@ winjs.createWinApp = function(dbModifier, requiredObjects, callback)
         app.get('/api/family/initial', routes.familyAPI.getInitialFamilyInformation);
 
 
+        //send a get request for any type of artifacts
+        //these are new additions for the new win-backbone code for alife
+        //all of this is going to be redesigned in teh future-- for now, must hurry
+        app.get('/api/artifacts', routes.getAPI.getArtifactBatch)
+        app.get('/api/seeds', routes.seedAPI.getSeedsRequest);
+
 
         //generator and schema loader for this app!
         var generator = app.winRoutes.generator;

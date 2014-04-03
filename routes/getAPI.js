@@ -47,9 +47,11 @@ module.exports = function(appRoutes)
     getAPI.getArtifactBatch = function(req, res)
     {
         console.log('Get artifact batch');
-        var batchArtifacts = req.body.artifacts;
+        var type = req.query.artifactType;
+        var batchArtifacts = req.query.wids.split(',');
 
-        getAPI.fetchArtifacts(batchArtifacts, function(err, loadedArtifacts)
+
+        getAPI.fetchArtifacts(type, batchArtifacts, {}, function(err, loadedArtifacts)
         {
             //we have our artifacts, return over json
             if(err)

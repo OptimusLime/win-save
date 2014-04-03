@@ -378,6 +378,46 @@ module.exports = function(appRoutes)
         });
     };
 
+
+    seedAPI.getSeedsRequest = function(req, res)
+    {
+        var max = req.query.maxSeeds || 1;
+
+        seedAPI.getAllSeeds(function(err, seeds)
+        {
+            if(err)
+            {
+                res.send(500, err.message);
+                return;
+            }
+
+            if(seeds.length == max)
+            {
+                res.json(seeds);
+            }
+            else if(seeds.length ==0)
+            {
+                res.send(400, "No seeds available");
+            }
+            else
+            {
+
+                //otherwise, we pick as many randomly as desired
+                var desiredRemoved = seeds.length - max;
+
+                for(var i=0; i < desiredRemoved; i++)
+                {
+                    var seedLength = seeds.length;
+                    //remove a random index
+                    seeds.splice(Math.floor(Math.random()*seedLength), 1);
+                }
+
+                //return teh appropraitely sized seed bank
+                res.json(seeds);
+             }
+        })
+    }
+
     seedAPI.getRandomSeed = function(seedReturn)
     {
         SeedModel.count(function(err,count){
