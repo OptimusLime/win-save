@@ -378,6 +378,19 @@ module.exports = function(appRoutes)
         });
     };
 
+    function prepareSeeds(seeds)
+    {
+        var aObjects = [];
+        for(var key in seeds)
+        {
+            var seed = seeds[key];
+
+            var artObject = seed.artifactID;
+            aObjects.push(artObject);
+        }
+
+        return aObjects;
+    }
 
     seedAPI.getSeedsRequest = function(req, res)
     {
@@ -393,7 +406,7 @@ module.exports = function(appRoutes)
 
             if(seeds.length == max)
             {
-                res.json(seeds);
+                res.json(prepareSeeds(seeds));
             }
             else if(seeds.length ==0)
             {
@@ -413,11 +426,10 @@ module.exports = function(appRoutes)
                 }
 
                 //return teh appropraitely sized seed bank
-                res.json(seeds);
+                res.json(prepareSeeds(seeds));
              }
         })
     }
-
     seedAPI.getRandomSeed = function(seedReturn)
     {
         SeedModel.count(function(err,count){
