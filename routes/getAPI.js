@@ -48,16 +48,57 @@ module.exports = function(appRoutes)
     {
         console.log('Get artifact batch');
         var type = req.query.artifactType;
-        var batchArtifacts = req.query.wids.split(',');
+        var all = req.query.all;
+        var pw = req.query.password;
 
+        var allFetch = false;
+        var batchArtifacts;
+        if(all && pw == "allplease")
+        {
+            allFetch = true;
+            batchArtifacts = {};
+        }
+        else
+        {
+          batchArtifacts = req.query.wids.split(',');
+
+        }
 
         getAPI.fetchArtifacts(type, batchArtifacts, {}, function(err, loadedArtifacts)
         {
-            //we have our artifacts, return over json
-            if(err)
-                res.json(err);
+            if(allFetch)
+            {
+                //now we need all the seeds
+                winroutes.seedAPI.getAllSeeds(function(err, seeds)
+                {
+                     //we have our artifacts, return over json
+                    if(err)
+                        res.json(err);
+                    else {
+                        res.json(loadedArtifacts);
+                        var internalSeeds = [];
+                        for(var key in seeds)
+                        {
+                            internalSeeds.push(seeds[key].artifactID);
+                        }
+                        
+                        //send it ALL back, including seed objects
+                        res.json(loadedArtifacts.concat(internalSeeds));                        
+                    }
+
+
+                })
+
+
+            }
             else
-                res.json(loadedArtifacts);
+            {
+                //we have our artifacts, return over json
+                if(err)
+                    res.json(err);
+                else
+                    res.json(loadedArtifacts);
+            }
         });
 
     };
