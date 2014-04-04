@@ -75,7 +75,6 @@ module.exports = function(appRoutes)
                     if(err)
                         res.json(err);
                     else {
-                        res.json(loadedArtifacts);
                         var internalSeeds = [];
                         for(var key in seeds)
                         {
