@@ -147,6 +147,63 @@ winjs.createWinApp = function(dbModifier, requiredObjects, callback)
 
 var lastApp;
 
+//be careful with this function -- it does exactly what it says
+winjs.clearWINDatabases = function(dbModifier, requiredObjects, done)
+{
+    //we have to instantiate the app to clear it
+    winjs.createWinApp(dbModifier, requiredObjects, function(err, winapp, connection)
+    {
+        //use with caution! This will remove all objects and seed!
+        var seedAPI = winapp.winRoutes.seedAPI;
+        var schemaLoader = winapp.winRoutes.schemaLoader;
+
+        //clear out our seeds
+        seedAPI.clearSeeds(function(err)
+        {
+            if(err)
+            {
+                done(err);
+                return;
+            }
+
+            //now we need to clear out the databases as well
+            var allSchema = schemaLoader.getSchemaModels();
+
+            var schemaArray = [];
+            for(var key in allSchema)
+                schemaArray.push(allSchema[key]);
+
+            //we've created an array of models
+            //now we need to clean out the models, for a clean slate!
+            var emptyIx = 0;
+
+            var errs = [];
+            for(var i=0; i < schemaArray.length; i++)
+            {
+                schemaArray[i].remove({}, function(err){
+
+                    if(err)
+                        errs.push(err);
+
+                    emptyIx++;
+
+                    if(emptyIx == schemaArray.length){
+
+                        if(errs.length)
+                            done(errs);
+                        else
+                            done();
+                    }
+
+                });
+            }
+
+
+        });
+    })
+
+}
+
 winjs.launchWIN = function(requiredObjects, options, callback)
 {
     console.log('launching!');
